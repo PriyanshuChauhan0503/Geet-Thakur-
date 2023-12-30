@@ -1,86 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geet Thakur's Instagram</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap">
-    <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Caveat', cursive, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden; /* Hide overflow to prevent scroll bars */
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geet Thakur's Instagram</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Quicksand', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-        h1 {
-            color: #fff;
-            margin-bottom: 20px;
-            font-size: 36px;
-        }
+    h1, p, .button, #clock, #age {
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 1s, transform 1s;
+    }
 
-        p {
-            margin-bottom: 30px;
-            font-size: 18px;
-            max-width: 600px;
-            text-align: center;
-            color: #ddd;
-        }
+    h1.show, p.show, .button.show, #clock.show, #age.show {
+      opacity: 1;
+      transform: scale(1);
+    }
 
-        .button {
-            display: inline-block;
-            padding: 15px 30px;
-            background-color: #4CAF50;
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 18px;
-            border-radius: 8px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            animation: pulse 2s infinite;
-            cursor: pointer;
-        }
+    h1 {
+      font-size: 28px;
+      margin: 0;
+      animation: fadeInGradient 2s linear infinite;
+      text-align: center;
+    }
 
-        .button:hover {
-            background-color: #45a049;
-            animation: none;
-        }
+    p {
+      animation: fadeIn 1s ease-out 1s forwards;
+      max-width: 80%;
+      text-align: center;
+      font-size: 16px;
+      margin-top: 10px;
+    }
 
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            transform: translateZ(-1px) scale(2);
-            background: linear-gradient(45deg, #3498db, #e74c3c);
-            z-index: -1;
-        }
+    /* Modified the button to an anchor tag */
+    .button {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid #fff;
+      background-color: transparent;
+      padding: 10px 20px;
+      font-size: 14px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      margin-top: 20px;
+      color: #fff;
+      z-index: 1;
+      text-decoration: none; /* Added this line for styling */
+    }
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-    </style>
+    .button:hover {
+      color: #fff;
+    }
+
+    .button::before {
+      content: "";
+      position: absolute;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: scale(0);
+      transform-origin: center;
+      animation: ripple 0.8s linear;
+      pointer-events: none;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    #clock {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 18px;
+      margin-top: 20px;
+      animation: fadeIn 1s ease-out 1s forwards;
+    }
+
+    #time {
+      margin-bottom: 10px;
+      animation: fadeIn 1s ease-out 1s forwards;
+    }
+
+    #date {
+      font-size: 14px;
+      animation: fadeIn 1s ease-out 1.5s forwards;
+    }
+
+    #age {
+      font-size: 14px;
+      margin-top: 10px;
+      animation: fadeIn 1s ease-out 2s forwards;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      background: linear-gradient(45deg, #3498db, #e74c3c);
+      background-size: 400% 400%;
+      animation: gradientAnimation 10s infinite alternate, sparkle 1.5s infinite alternate;
+    }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+
+    @keyframes sparkle {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInGradient {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="background"></div>
-    <h1>Welcome to Geet Thakur's Joyful Moments</h1>
-    <p>Embark on a delightful journey through the eyes of Geet Thakur, a one-year-old bundle of joy. Explore heartwarming videos capturing her adorable laughter, curious explorations, and precious milestones. Join us in celebrating the pure and magical moments of Geet's early years.</p>
-    <a class="button" href="https://www.instagram.com/drama.queen.6129/" target="_blank">Explore Now</a>
+  <div class="background"></div>
+  <h1 class="show">Welcome to Geet Thakur's Joyful Moments</h1>
+  <p class="show">Embark on a delightful journey through the eyes of Geet Thakur, a one-year-old bundle of joy. Explore heartwarming videos capturing her adorable laughter, curious explorations, and precious milestones. Join us in celebrating the pure and magical moments of Geet's early years.</p>
+  <!-- Modified the button to an anchor tag -->
+  <a class="button show" href="https://www.instagram.com/drama.queen.6129?igsh=MXg2b3g3d2huaWx4dw==" target="_blank">Geet Thakur's Profile</a>
+  <div id="clock" class="show">
+    <div id="time"></div>
+    <div id="date"></div>
+    <div id="age">Geet's Age: <span id="ageValue"></span></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelector('.background').style.animationPlayState = 'running';
+      document.querySelectorAll('.show').forEach(function (element) {
+        element.style.animationPlayState = 'running';
+      });
+      updateTime();
+      showAge();
+      setInterval(function () {
+        updateTime();
+        showAge();
+      }, 1000);
+    });
+
+    function updateTime() {
+      const now = new Date();
+      const utcOffset = 5.5 * 60; // UTC+5:30 for India
+      const localTime = new Date(now.getTime() + utcOffset * 60000);
+
+      const hours = localTime.getUTCHours();
+      const minutes = localTime.getUTCMinutes();
+      const seconds = localTime.getUTCSeconds();
+      const day = localTime.getUTCDate();
+      const month = localTime.getUTCMonth() + 1; // Months are zero-based
+      const year = localTime.getUTCFullYear();
+
+      const timeElement = document.getElementById('time');
+      const dateElement = document.getElementById('date');
+
+      const formattedTime = `${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}`;
+      const formattedDate = `${formatTwoDigits(day)}/${formatTwoDigits(month)}/${year}`;
+
+      timeElement.textContent = formattedTime;
+      dateElement.textContent = formattedDate;
+    }
+
+    function showAge() {
+      const birthDate = new Date('2022-02-25T23:34:00'); // Updated birthdate and time
+      const now = new Date();
+      const age = calculateAge(birthDate, now);
+
+      const ageValueElement = document.getElementById('ageValue');
+      ageValueElement.textContent = `${age.years} years, ${age.months} months, ${age.days} days, ${age.hours} hours, ${age.minutes} minutes, and ${age.seconds} seconds`;
+    }
+
+    function calculateAge(birthDate, currentDate) {
+      const ageInMilliseconds = currentDate - birthDate;
+      const ageInSeconds = ageInMilliseconds / 1000;
+
+      const secondsInMinute = 60;
+      const secondsInHour = 60 * secondsInMinute;
+      const secondsInDay = 24 * secondsInHour;
+      const secondsInMonth = 30 * secondsInDay; // Approximating a month to 30 days
+      const secondsInYear = 365 * secondsInDay; // Approximating a year to 365 days
+
+      const years = Math.floor(ageInSeconds / secondsInYear);
+      const months = Math.floor((ageInSeconds % secondsInYear) / secondsInMonth);
+      const days = Math.floor(((ageInSeconds % secondsInYear) % secondsInMonth) / secondsInDay);
+      const hours = Math.floor((((ageInSeconds % secondsInYear) % secondsInMonth) % secondsInDay) / secondsInHour);
+      const minutes = Math.floor(((((ageInSeconds % secondsInYear) % secondsInMonth) % secondsInDay) % secondsInHour) / secondsInMinute);
+      const seconds = Math.floor((((ageInSeconds % secondsInYear) % secondsInMonth) % secondsInDay) % secondsInHour) % secondsInMinute;
+
+      return { years, months, days, hours, minutes, seconds };
+    }
+
+    function formatTwoDigits(value) {
+      return value < 10 ? `0${value}` : value;
+    }
+
+    function toggleAnimation() {
+      const elements = document.querySelectorAll('.button, #clock, #ageValue');
+      elements.forEach(function (element) {
+        element.style.animationPlayState = element.style.animationPlayState === 'running' ? 'paused' : 'running';
+      });
+    }
+  </script>
 </body>
+
 </html>
