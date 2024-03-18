@@ -226,3 +226,22 @@
 
       const hours = localTime.getUTCHours();
       const minutes = localTime.getUTC
+
+    @keyframes boom {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+body {
+  animation: boom 0.5s ease-out;
+    }
