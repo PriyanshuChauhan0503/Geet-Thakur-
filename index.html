@@ -119,7 +119,7 @@
       z-index: -1;
       background: linear-gradient(45deg, #3498db, #e74c3c);
       background-size: 400% 400%;
-      animation: gradientAnimation 10s infinite alternate, sparkle 1.5s infinite alternate;
+      animation: gradientAnimation 3s infinite alternate, sparkle 1s infinite alternate;
     }
 
     @keyframes gradientAnimation {
@@ -169,6 +169,27 @@
         background-position: 100% 50%;
       }
     }
+    
+    /* Append the boom animation keyframes */
+    @keyframes boom {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Append the boom animation to the body */
+    body {
+      animation: boom 0.5s ease-out;
+    }
   </style>
 </head>
 
@@ -204,62 +225,4 @@
       const localTime = new Date(now.getTime() + utcOffset * 60000);
 
       const hours = localTime.getUTCHours();
-      const minutes = localTime.getUTCMinutes();
-      const seconds = localTime.getUTCSeconds();
-      const day = localTime.getUTCDate();
-      const month = localTime.getUTCMonth() + 1; // Months are zero-based
-      const year = localTime.getUTCFullYear();
-
-      const timeElement = document.getElementById('time');
-      const dateElement = document.getElementById('date');
-
-      const formattedTime = `${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}`;
-      const formattedDate = `${formatTwoDigits(day)}/${formatTwoDigits(month)}/${year}`;
-
-      timeElement.textContent = formattedTime;
-      dateElement.textContent = formattedDate;
-    }
-
-    function showAge() {
-      const birthDate = new Date('2022-02-25T23:34:00'); // Updated birthdate and time
-      const now = new Date();
-      const age = calculateAge(birthDate, now);
-
-      const ageValueElement = document.getElementById('ageValue');
-      ageValueElement.textContent = `${age.years} years, ${age.months} months, ${age.days} days, ${age.hours} hours, ${age.minutes} minutes, and ${age.seconds} seconds`;
-    }
-
-    function calculateAge(birthDate, currentDate) {
-      const ageInMilliseconds = currentDate - birthDate;
-      const ageInSeconds = ageInMilliseconds / 1000;
-
-      const secondsInMinute = 60;
-      const secondsInHour = 60 * secondsInMinute;
-      const secondsInDay = 24 * secondsInHour;
-      const secondsInMonth = 30 * secondsInDay; // Approximating a month to 30 days
-      const secondsInYear = 365 * secondsInDay; // Approximating a year to 365 days
-
-      const years = Math.floor(ageInSeconds / secondsInYear);
-      const months = Math.floor((ageInSeconds % secondsInYear) / secondsInMonth);
-      const days = Math.floor(((ageInSeconds % secondsInYear) % secondsInMonth) / secondsInDay);
-      const hours = Math.floor((((ageInSeconds % secondsInYear) % secondsInMonth) % secondsInDay) / secondsInHour);
-      const minutes = Math.floor(((((ageInSeconds % secondsInYear) % secondsInMonth) % secondsInDay) % secondsInHour) / secondsInMinute);
-      const seconds = Math.floor((((ageInSeconds % secondsInYear) % secondsInMonth) % secondsInDay) % secondsInHour) % secondsInMinute;
-
-      return { years, months, days, hours, minutes, seconds };
-    }
-
-    function formatTwoDigits(value) {
-      return value < 10 ? `0${value}` : value;
-    }
-
-    function toggleAnimation() {
-      const elements = document.querySelectorAll('.button, #clock, #ageValue');
-      elements.forEach(function (element) {
-        element.style.animationPlayState = element.style.animationPlayState === 'running' ? 'paused' : 'running';
-      });
-    }
-  </script>
-</body>
-
-</html>
+      const minutes = localTime.getUTC
