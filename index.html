@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,25 +19,21 @@
       height: 100vh;
       overflow: hidden;
     }
-
     h1, p, .button, #clock, #age {
       opacity: 0;
       transform: scale(0.8);
       transition: opacity 1s, transform 1s;
     }
-
     h1.show, p.show, .button.show, #clock.show, #age.show {
       opacity: 1;
       transform: scale(1);
     }
-
     h1 {
       font-size: 28px;
       margin: 0;
       animation: fadeInGradient 2s linear infinite;
       text-align: center;
     }
-
     p {
       animation: fadeIn 1s ease-out 1s forwards;
       max-width: 80%;
@@ -46,7 +41,6 @@
       font-size: 16px;
       margin-top: 10px;
     }
-
     /* Modified the button to an anchor tag */
     .button {
       position: relative;
@@ -62,11 +56,9 @@
       z-index: 1;
       text-decoration: none; /* Added this line for styling */
     }
-
     .button:hover {
       color: #fff;
     }
-
     .button::before {
       content: "";
       position: absolute;
@@ -77,14 +69,12 @@
       animation: ripple 0.8s linear;
       pointer-events: none;
     }
-
     @keyframes ripple {
       to {
         transform: scale(4);
         opacity: 0;
       }
     }
-
     #clock {
       display: flex;
       flex-direction: column;
@@ -93,23 +83,18 @@
       margin-top: 20px;
       animation: fadeIn 1s ease-out 1s forwards;
     }
-
     #time {
       margin-bottom: 10px;
       animation: fadeIn 1s ease-out 1s forwards;
     }
-
-    #date {
-      font-size: 14px;
+    #date {font-size: 14px;
       animation: fadeIn 1s ease-out 1.5s forwards;
     }
-
     #age {
       font-size: 14px;
       margin-top: 10px;
       animation: fadeIn 1s ease-out 2s forwards;
     }
-
     .background {
       position: fixed;
       top: 0;
@@ -119,6 +104,7 @@
       z-index: -1;
       background: linear-gradient(45deg, #3498db, #e74c3c);
       background-size: 400% 400%;
+      animation: gradientAnimation 10s infinite alternate, sparkle 1.5s infinite alternate;
       animation: gradientAnimation 3s infinite alternate, sparkle 1s infinite alternate;
     }
 
@@ -130,7 +116,6 @@
         background-position: 100% 50%;
       }
     }
-
     @keyframes sparkle {
       0%, 100% {
         transform: scale(1);
@@ -139,7 +124,6 @@
         transform: scale(1.2);
       }
     }
-
     @keyframes pulse {
       0% {
         transform: scale(1);
@@ -151,7 +135,6 @@
         transform: scale(1);
       }
     }
-
     @keyframes fadeIn {
       0% {
         opacity: 0;
@@ -160,7 +143,6 @@
         opacity: 1;
       }
     }
-
     @keyframes fadeInGradient {
       0%, 100% {
         background-position: 0% 50%;
@@ -169,7 +151,7 @@
         background-position: 100% 50%;
       }
     }
-    
+
     /* Append the boom animation keyframes */
     @keyframes boom {
       0% {
@@ -189,8 +171,7 @@
     /* Append the boom animation to the body */
     body {
       animation: boom 0.5s ease-out;
-    }
-  </style>
+    }</style>
 </head>
 
 <body>
@@ -204,7 +185,6 @@
     <div id="date"></div>
     <div id="age">Geet's Age: <span id="ageValue"></span></div>
   </div>
-
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       document.querySelector('.background').style.animationPlayState = 'running';
@@ -218,30 +198,69 @@
         showAge();
       }, 1000);
     });
-
     function updateTime() {
       const now = new Date();
       const utcOffset = 5.5 * 60; // UTC+5:30 for India
       const localTime = new Date(now.getTime() + utcOffset * 60000);
 
       const hours = localTime.getUTCHours();
-      const minutes = localTime.getUTC
+      const minutes = localTime.getUTCMinutes();
+      const seconds = localTime.getUTCSeconds();
+      const day = localTime.getUTCDate();
+      const month = localTime.getUTCMonth() + 1; // Months are zero-based
+      const year = localTime.getUTCFullYear();
 
-    @keyframes boom {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
+      const timeElement = document.getElementById('time');
+      const dateElement = document.getElementById('date');
 
-body {
-  animation: boom 0.5s ease-out;
+      const formattedTime = `${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}`;
+      const formattedDate = `${formatTwoDigits(day)}/${formatTwoDigits(month)}/${year}`;
+
+      timeElement.textContent = formattedTime;
+      dateElement.textContent = formattedDate;
     }
+
+    function showAge() {
+      const birthDate = new Date('2022-02-25T23:34:00'); // Updated birthdate and time
+      const now = new Date();
+      const age = calculateAge(birthDate, now);
+
+      const ageValueElement = document.getElementById('ageValue');
+      ageValueElement.textContent = `${age.years} years, ${age.months} months, ${age.days} days, ${age.hours} hours, ${age.minutes} minutes, and ${age.seconds} seconds`;
+    }
+
+    function calculateAge(birthDate, currentDate) {
+      const ageInMilliseconds = currentDate - birthDate;
+      const ageInSeconds = ageInMilliseconds / 1000;
+
+      const secondsInMinute = 60;
+      const secondsInHour = 60 * secondsInMinute;
+      const secondsInDay = 24 * secondsInHour;
+      const secondsInMonth = 30 * secondsInDay; // Approximating a month to 30 days
+      const secondsInYear = 365 * secondsInDay; // Approximating a year to 365 days
+
+      const years = Math.floor(ageInSeconds / secondsInYear);
+      const months = Math.floor((ageInSeconds % secondsInYear) / secondsInMonth);
+      const days = Math.floor(((ageInSeconds % secondsInYear) % secondsInMonth) / secondsInDay);
+      const hours = Math.floor((((ageInSeconds % secondsInYear) % secondsInMonth) % secondsInDay) / secondsInHour);
+      const minutes = Math.floor(((((ageInSeconds % secondsInYear) % secondsInMonth) % secondsInDay) % secondsInHour) / secondsInMinute);
+      const seconds = Math.floor((((ageInSeconds % secondsInYear) % secondsInMonth) % secondsInDay) % secondsInHour) % secondsInMinute;
+
+      return { years, months, days, hours, minutes, seconds };
+    }
+
+    function formatTwoDigits(value) {
+      return value < 10 ? `0${value}` : value;
+    }
+
+    function toggleAnimation() {
+      const elements = document.querySelectorAll('.button, #clock, #ageValue');
+      elements.forEach(function (element) {
+        element.style.animationPlayState = element.style.animationPlayState === 'running' ? 'paused' : 'running';
+      });
+    }
+  </script>
+</body>
+
+</html>
+      const minutes = localTime.getUTC
